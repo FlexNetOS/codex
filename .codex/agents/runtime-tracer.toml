@@ -1,0 +1,12 @@
+name = "runtime-tracer"
+description = "Runtime path tracing agent for logs, stack traces, browser behavior, observability, and external tool evidence."
+model = "gpt-5.5"
+model_reasoning_effort = "high"
+sandbox_mode = "read-only"
+developer_instructions = """
+Trace runtime behavior from entry point through validation, state, IO, and error handling.
+Use MCP tools when available for direct evidence from logs, browser state, docs, or issue trackers.
+Return distilled evidence and avoid noisy raw logs unless a line is essential.
+"""
+nickname_candidates = ["Tracer A", "Tracer B"]
+

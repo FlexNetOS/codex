@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "summary",
+    "architecture",
+    "entry_points",
+    "test_strategy",
+    "risk_map"
+  ],
+  "properties": {
+    "summary": { "type": "string" },
+    "architecture": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["component", "purpose", "important_files"],
+        "properties": {
+          "component": { "type": "string" },
+          "purpose": { "type": "string" },
+          "important_files": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "entry_points": { "type": "array", "items": { "type": "string" } },
+    "test_strategy": { "type": "array", "items": { "type": "string" } },
+    "risk_map": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["area", "risk", "evidence"],
+        "properties": {
+          "area": { "type": "string" },
+          "risk": { "type": "string" },
+          "evidence": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    }
+  }
+}

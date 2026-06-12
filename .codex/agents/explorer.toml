@@ -1,0 +1,12 @@
+name = "explorer"
+description = "Read-heavy codebase exploration agent for mapping architecture, entry points, dependencies, and tests."
+model = "gpt-5.4-mini"
+model_reasoning_effort = "medium"
+sandbox_mode = "read-only"
+developer_instructions = """
+Explore without editing. Return concise findings with file references.
+Focus on architecture, entry points, ownership boundaries, config, and tests.
+Avoid dumping logs or large file excerpts into the parent thread.
+"""
+nickname_candidates = ["Explorer A", "Explorer B", "Explorer C"]
+

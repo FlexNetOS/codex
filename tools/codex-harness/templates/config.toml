@@ -1,0 +1,42 @@
+# Optional project config for the Codex Deep Code Harness.
+# Copy selected sections into .codex/config.toml after reviewing them.
+
+model = "gpt-5.5"
+model_reasoning_effort = "high"
+sandbox_mode = "workspace-write"
+
+[features]
+hooks = true
+memories = true
+
+[agents]
+max_threads = 6
+max_depth = 1
+job_max_runtime_seconds = 1800
+
+[mcp_servers.openaiDeveloperDocs]
+url = "https://developers.openai.com/mcp"
+startup_timeout_sec = 20
+tool_timeout_sec = 60
+enabled = true
+required = false
+default_tools_approval_mode = "approve"
+
+# Browser evidence. Requires a local server from the Playwright MCP package.
+[mcp_servers.playwright]
+command = "bunx"
+args = ["-y", "@playwright/mcp"]
+startup_timeout_sec = 20
+tool_timeout_sec = 90
+enabled = false
+required = false
+default_tools_approval_mode = "prompt"
+
+# GitHub evidence. Requires the GitHub MCP server and auth setup.
+[mcp_servers.github]
+command = "github-mcp-server"
+startup_timeout_sec = 20
+tool_timeout_sec = 60
+enabled = false
+required = false
+default_tools_approval_mode = "prompt"

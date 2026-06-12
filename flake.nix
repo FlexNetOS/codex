@@ -59,19 +59,23 @@
             inherit system;
             overlays = [ rust-overlay.overlays.default ];
           };
-          rust = pkgs.rust-bin.stable.latest.default.override {
-            extensions = [ "rust-src" "rust-analyzer" ];
-          };
+          rust = pkgs.rust-bin.fromRustupToolchainFile ./codex-rs/rust-toolchain.toml;
         in
         {
           default = pkgs.mkShell {
             buildInputs = [
               rust
+              pkgs.bazelisk
+              pkgs.cargo-insta
+              pkgs.cargo-nextest
               pkgs.pkg-config
               pkgs.openssl
               pkgs.cmake
+              pkgs.just
               pkgs.llvmPackages.clang
               pkgs.llvmPackages.libclang.lib
+            ] ++ nixpkgs.lib.optionals pkgs.stdenv.isLinux [
+              pkgs.libcap
             ];
             PKG_CONFIG_PATH = "${pkgs.openssl.dev}/lib/pkgconfig";
             LIBCLANG_PATH = "${pkgs.llvmPackages.libclang.lib}/lib";

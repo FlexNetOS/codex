@@ -88,6 +88,8 @@ CHANGELOG.ignore.md
 # nix related
 .direnv
 .envrc
+.codex/harness/runs/
+.codex/harness/telemetry/
 
 # Python bytecode files
 __pycache__/
