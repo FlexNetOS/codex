@@ -210,7 +210,12 @@ async fn status_surface_preview_lines_rate_limits_snapshot() {
 
     let snapshot = combined_preview_snapshot(
         &mut chat,
-        &[StatusLineItem::FiveHourLimit, StatusLineItem::WeeklyLimit],
+        &[
+            StatusLineItem::FiveHourLimit,
+            StatusLineItem::FiveHourUsage,
+            StatusLineItem::WeeklyLimit,
+            StatusLineItem::WeeklyUsage,
+        ],
         &[
             TerminalTitleItem::FiveHourLimit,
             TerminalTitleItem::WeeklyLimit,
@@ -268,7 +273,9 @@ async fn status_line_setup_popup_rate_limits_snapshot() {
     cache_rate_limit_snapshot(&mut chat);
     chat.config.tui_status_line = Some(vec![
         "five-hour-limit".to_string(),
+        "five-hour-usage".to_string(),
         "weekly-limit".to_string(),
+        "weekly-usage".to_string(),
     ]);
 
     assert_chatwidget_snapshot!(

@@ -21,7 +21,9 @@ pub(crate) enum StatusSurfacePreviewItem {
     ContextRemaining,
     ContextUsed,
     FiveHourLimit,
+    FiveHourUsage,
     WeeklyLimit,
+    WeeklyUsage,
     CodexVersion,
     ContextWindowSize,
     UsedTokens,
@@ -53,7 +55,9 @@ impl StatusSurfacePreviewItem {
             StatusSurfacePreviewItem::ContextRemaining => "Context 0% left",
             StatusSurfacePreviewItem::ContextUsed => "Context 0% used",
             StatusSurfacePreviewItem::FiveHourLimit => "primary 0%",
+            StatusSurfacePreviewItem::FiveHourUsage => "primary 0% used",
             StatusSurfacePreviewItem::WeeklyLimit => "secondary 0%",
+            StatusSurfacePreviewItem::WeeklyUsage => "secondary 0% used",
             StatusSurfacePreviewItem::CodexVersion => "0.0.0",
             StatusSurfacePreviewItem::ContextWindowSize => "0 window",
             StatusSurfacePreviewItem::UsedTokens => "0 used",
@@ -85,7 +89,9 @@ impl StatusSurfacePreviewItem {
             Self::ContextRemaining,
             Self::ContextUsed,
             Self::FiveHourLimit,
+            Self::FiveHourUsage,
             Self::WeeklyLimit,
+            Self::WeeklyUsage,
             Self::CodexVersion,
             Self::ContextWindowSize,
             Self::UsedTokens,
@@ -238,35 +244,70 @@ struct RateLimitPreviewCopy {
 
 fn rate_limit_preview_copy(value: &str) -> Option<RateLimitPreviewCopy> {
     let value = value.trim_start();
-    if value.starts_with("secondary usage ") {
+    if value.starts_with("secondary usage ") && value.ends_with(" used") {
+        Some(RateLimitPreviewCopy {
+            name: "secondary-usage-used",
+            description: "Used usage on the secondary usage limit (omitted when unavailable)",
+        })
+    } else if value.starts_with("secondary usage ") {
         Some(RateLimitPreviewCopy {
             name: "secondary-usage-limit",
             description: "Remaining usage on the secondary usage limit (omitted when unavailable)",
+        })
+    } else if value.starts_with("usage ") && value.ends_with(" used") {
+        Some(RateLimitPreviewCopy {
+            name: "usage-used",
+            description: "Used usage on the primary usage limit (omitted when unavailable)",
         })
     } else if value.starts_with("usage ") {
         Some(RateLimitPreviewCopy {
             name: "usage-limit",
             description: "Remaining usage on the primary usage limit (omitted when unavailable)",
         })
+    } else if value.starts_with("5h ") && value.ends_with(" used") {
+        Some(RateLimitPreviewCopy {
+            name: "five-hour-usage",
+            description: "Used usage on the 5-hour usage limit (omitted when unavailable)",
+        })
     } else if value.starts_with("5h ") {
         Some(RateLimitPreviewCopy {
             name: "five-hour-limit",
             description: "Remaining usage on the 5-hour usage limit (omitted when unavailable)",
+        })
+    } else if value.starts_with("daily ") && value.ends_with(" used") {
+        Some(RateLimitPreviewCopy {
+            name: "daily-usage",
+            description: "Used usage on the daily usage limit (omitted when unavailable)",
         })
     } else if value.starts_with("daily ") {
         Some(RateLimitPreviewCopy {
             name: "daily-limit",
             description: "Remaining usage on the daily usage limit (omitted when unavailable)",
         })
+    } else if value.starts_with("weekly ") && value.ends_with(" used") {
+        Some(RateLimitPreviewCopy {
+            name: "weekly-usage",
+            description: "Used usage on the weekly usage limit (omitted when unavailable)",
+        })
     } else if value.starts_with("weekly ") {
         Some(RateLimitPreviewCopy {
             name: "weekly-limit",
             description: "Remaining usage on the weekly usage limit (omitted when unavailable)",
         })
+    } else if value.starts_with("monthly ") && value.ends_with(" used") {
+        Some(RateLimitPreviewCopy {
+            name: "monthly-usage",
+            description: "Used usage on the monthly usage limit (omitted when unavailable)",
+        })
     } else if value.starts_with("monthly ") {
         Some(RateLimitPreviewCopy {
             name: "monthly-limit",
             description: "Remaining usage on the monthly usage limit (omitted when unavailable)",
+        })
+    } else if value.starts_with("annual ") && value.ends_with(" used") {
+        Some(RateLimitPreviewCopy {
+            name: "annual-usage",
+            description: "Used usage on the annual usage limit (omitted when unavailable)",
         })
     } else if value.starts_with("annual ") {
         Some(RateLimitPreviewCopy {

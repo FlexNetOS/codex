@@ -1,6 +1,7 @@
 ---
 source: tui/src/chatwidget/tests/status_surface_previews.rs
+assertion_line: 225
 expression: snapshot
 ---
-status line: monthly 65% left · weekly 50% left
+status line: monthly 65% left · monthly 35% used · weekly 50% left · weekly 50% used
 terminal title: monthly 65% left | weekly 50% left

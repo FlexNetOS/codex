@@ -620,8 +620,16 @@ async fn status_line_legacy_limit_items_prefer_matching_windows() {
         Some("5h 60% left".to_string())
     );
     assert_eq!(
+        chat.status_line_value_for_item(crate::bottom_pane::StatusLineItem::FiveHourUsage),
+        Some("5h 40% used".to_string())
+    );
+    assert_eq!(
         chat.status_line_value_for_item(crate::bottom_pane::StatusLineItem::WeeklyLimit),
         Some("weekly 6% left".to_string())
+    );
+    assert_eq!(
+        chat.status_line_value_for_item(crate::bottom_pane::StatusLineItem::WeeklyUsage),
+        Some("weekly 94% used".to_string())
     );
 }
 

@@ -613,6 +613,14 @@ impl ChatWidget {
                 let label = limit_label_for_window(window.window_minutes, is_secondary);
                 self.status_line_limit_display(Some(window), &label)
             }
+            StatusLineItem::FiveHourUsage => {
+                let (window, is_secondary) = self
+                    .rate_limit_snapshots_by_limit_id
+                    .get("codex")
+                    .and_then(five_hour_status_window)?;
+                let label = limit_label_for_window(window.window_minutes, is_secondary);
+                self.status_line_usage_display(Some(window), &label)
+            }
             StatusLineItem::WeeklyLimit => {
                 let (window, is_secondary) = self
                     .rate_limit_snapshots_by_limit_id
@@ -620,6 +628,14 @@ impl ChatWidget {
                     .and_then(weekly_status_window)?;
                 let label = limit_label_for_window(window.window_minutes, is_secondary);
                 self.status_line_limit_display(Some(window), &label)
+            }
+            StatusLineItem::WeeklyUsage => {
+                let (window, is_secondary) = self
+                    .rate_limit_snapshots_by_limit_id
+                    .get("codex")
+                    .and_then(weekly_status_window)?;
+                let label = limit_label_for_window(window.window_minutes, is_secondary);
+                self.status_line_usage_display(Some(window), &label)
             }
             StatusLineItem::CodexVersion => Some(CODEX_CLI_VERSION.to_string()),
             StatusLineItem::ContextWindowSize => self
@@ -684,7 +700,9 @@ impl ChatWidget {
             StatusSurfacePreviewItem::ContextRemaining => StatusLineItem::ContextRemaining,
             StatusSurfacePreviewItem::ContextUsed => StatusLineItem::ContextUsed,
             StatusSurfacePreviewItem::FiveHourLimit => StatusLineItem::FiveHourLimit,
+            StatusSurfacePreviewItem::FiveHourUsage => StatusLineItem::FiveHourUsage,
             StatusSurfacePreviewItem::WeeklyLimit => StatusLineItem::WeeklyLimit,
+            StatusSurfacePreviewItem::WeeklyUsage => StatusLineItem::WeeklyUsage,
             StatusSurfacePreviewItem::CodexVersion => StatusLineItem::CodexVersion,
             StatusSurfacePreviewItem::ContextWindowSize => StatusLineItem::ContextWindowSize,
             StatusSurfacePreviewItem::UsedTokens => StatusLineItem::UsedTokens,
