@@ -1,5 +1,6 @@
 ---
 source: tui/src/chatwidget/tests/status_surface_previews.rs
+assertion_line: 281
 expression: status_line_popup_snapshot(&mut chat)
 ---
   Configure Status Line
@@ -10,11 +11,11 @@ expression: status_line_popup_snapshot(&mut chat)
 › [x] Use theme colors      Apply colors from the active /theme
   ───────────────────────
   [x] monthly-limit         Remaining usage on the monthly usage limit (omitted when unavailable)
+  [x] monthly-usage         Used usage on the monthly usage limit (omitted when unavailable)
   [x] weekly-limit          Remaining usage on the weekly usage limit (omitted when unavailable)
+  [x] weekly-usage          Used usage on the weekly usage limit (omitted when unavailable)
   [ ] model                 Current model name
   [ ] model-with-reasoning  Current model name with reasoning level
-  [ ] reasoning             Current reasoning level
-  [ ] current-dir           Current working directory
 
-  monthly 65% left · weekly 50% left
+  monthly 65% left · monthly 35% used · weekly 50% left · weekly 50% used
   Press space to toggle; ←/→ to move; enter to confirm and close; esc to close

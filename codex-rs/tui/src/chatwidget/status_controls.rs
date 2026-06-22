@@ -381,6 +381,16 @@ impl ChatWidget {
         Some(format!("{label} {remaining:.0}% left"))
     }
 
+    pub(super) fn status_line_usage_display(
+        &self,
+        window: Option<&RateLimitWindowDisplay>,
+        label: &str,
+    ) -> Option<String> {
+        let window = window?;
+        let used = window.used_percent.clamp(0.0f64, 100.0f64);
+        Some(format!("{label} {used:.0}% used"))
+    }
+
     pub(super) fn status_line_reasoning_effort_label(
         effort: Option<ReasoningEffortConfig>,
     ) -> &'static str {

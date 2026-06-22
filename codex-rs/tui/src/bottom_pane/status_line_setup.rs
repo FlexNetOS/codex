@@ -106,8 +106,14 @@ pub(crate) enum StatusLineItem {
     /// Remaining usage on the primary rate limit.
     FiveHourLimit,
 
+    /// Used usage on the primary rate limit.
+    FiveHourUsage,
+
     /// Remaining usage on the secondary rate limit.
     WeeklyLimit,
+
+    /// Used usage on the secondary rate limit.
+    WeeklyUsage,
 
     /// Codex application version.
     CodexVersion,
@@ -169,8 +175,14 @@ impl StatusLineItem {
             StatusLineItem::FiveHourLimit => {
                 "Remaining usage on the primary usage limit (omitted when unavailable)"
             }
+            StatusLineItem::FiveHourUsage => {
+                "Used usage on the primary usage limit (omitted when unavailable)"
+            }
             StatusLineItem::WeeklyLimit => {
                 "Remaining usage on the secondary usage limit (omitted when unavailable)"
+            }
+            StatusLineItem::WeeklyUsage => {
+                "Used usage on the secondary usage limit (omitted when unavailable)"
             }
             StatusLineItem::CodexVersion => "Codex application version",
             StatusLineItem::ContextWindowSize => {
@@ -207,7 +219,9 @@ impl StatusLineItem {
             StatusLineItem::ContextRemaining => StatusSurfacePreviewItem::ContextRemaining,
             StatusLineItem::ContextUsed => StatusSurfacePreviewItem::ContextUsed,
             StatusLineItem::FiveHourLimit => StatusSurfacePreviewItem::FiveHourLimit,
+            StatusLineItem::FiveHourUsage => StatusSurfacePreviewItem::FiveHourUsage,
             StatusLineItem::WeeklyLimit => StatusSurfacePreviewItem::WeeklyLimit,
+            StatusLineItem::WeeklyUsage => StatusSurfacePreviewItem::WeeklyUsage,
             StatusLineItem::CodexVersion => StatusSurfacePreviewItem::CodexVersion,
             StatusLineItem::ContextWindowSize => StatusSurfacePreviewItem::ContextWindowSize,
             StatusLineItem::UsedTokens => StatusSurfacePreviewItem::UsedTokens,
@@ -345,7 +359,10 @@ impl StatusLineSetupView {
         let default_name = item.to_string();
         let default_description = item.description();
         let (name, description) = match item {
-            StatusLineItem::FiveHourLimit | StatusLineItem::WeeklyLimit => (
+            StatusLineItem::FiveHourLimit
+            | StatusLineItem::FiveHourUsage
+            | StatusLineItem::WeeklyLimit
+            | StatusLineItem::WeeklyUsage => (
                 preview_data.rate_limit_item_name(item.preview_item(), &default_name),
                 preview_data.rate_limit_item_description(item.preview_item(), default_description),
             ),
