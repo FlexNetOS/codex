@@ -1,27 +1,37 @@
 {
   "hooks": {
-    "SessionStart": [
-      {
-        "matcher": "startup|resume",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bun \"$(git rev-parse --show-toplevel)/tools/codex-harness/hooks/harness-hook.mjs\" SessionStart",
-            "timeout": 10,
-            "statusMessage": "Recording harness session start"
-          }
-        ]
-      }
-    ],
     "PostToolUse": [
       {
-        "matcher": "Bash|apply_patch|Edit|Write",
         "hooks": [
           {
-            "type": "command",
             "command": "bun \"$(git rev-parse --show-toplevel)/tools/codex-harness/hooks/harness-hook.mjs\" PostToolUse",
+            "statusMessage": "Recording harness tool event",
             "timeout": 10,
-            "statusMessage": "Recording harness tool event"
+            "type": "command"
+          }
+        ],
+        "matcher": "Bash|apply_patch|Edit|Write"
+      }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "command": "bun \"$(git rev-parse --show-toplevel)/tools/codex-harness/hooks/harness-hook.mjs\" SessionStart",
+            "statusMessage": "Recording harness session start",
+            "timeout": 10,
+            "type": "command"
+          }
+        ],
+        "matcher": "startup|resume"
+      },
+      {
+        "hooks": [
+          {
+            "command": "sh -lc 'root=\"$(git rev-parse --show-toplevel)\"; exec rusty-idd next --base \"$root\"'",
+            "statusMessage": "Rusty IDD front door: computing the next step",
+            "timeout": 180,
+            "type": "command"
           }
         ]
       }
@@ -30,10 +40,10 @@
       {
         "hooks": [
           {
-            "type": "command",
             "command": "bun \"$(git rev-parse --show-toplevel)/tools/codex-harness/hooks/harness-hook.mjs\" Stop",
+            "statusMessage": "Recording harness stop",
             "timeout": 10,
-            "statusMessage": "Recording harness stop"
+            "type": "command"
           }
         ]
       }
